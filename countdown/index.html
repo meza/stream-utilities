@@ -75,7 +75,11 @@
 
     } else {
       face.classList.remove('anim');
-      face.innerHTML = moment(distance).format('mm:ss');
+      if (unit === 'h') {
+        face.innerHTML = moment(distance).format('hh:mm:ss');
+      } else {
+        face.innerHTML = moment(distance).format('mm:ss');
+      }
       void face.offsetWidth;
       face.classList.add('anim');
       distance = distance - 1000;
