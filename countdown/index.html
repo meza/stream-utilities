@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+    <link href="/stream-utilities/css/countdown/countdown.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment-with-locales.min.js"></script>
+</head>
+<body>
+
+<div id="countdown" class="countdown">
+
+    <div id="counter" class="counter">
+        <div class="flex">
+            <p class="label text off">Stream starts in: </p>
+            <p id="face" class="text face anim"></p>
+        </div>
+    </div>
+
+    <div id="soon" class="counter off">
+        <span class="label text off">Stream starting #soon</span>
+    </div>
+</div>
+
+<script>
+
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  var countdownValue = getParameterByName('from') || 20;
+  var theme = getParameterByName('theme') || null;
+  var countdownUnit = (getParameterByName('unit') || 'm').toLowerCase();
+  var validUnits = ['s', 'm', 'h'];
+
+  if (validUnits.indexOf(countdownUnit) < 0) {
+    console.error('Not a valid countdown unit, please use: ', validUnits);
+    console.log('Using minute as the default unit');
+    countdownUnit = 'm';
+  }
+
+  var useLabel = false;
+  if (getParameterByName('useLabel') === 'true') {
+    useLabel = true;
+  }
+
+  var root = document.getElementById("countdown");
+  var countDownDate = moment().add(countdownValue, countdownUnit);
+  var face = document.getElementById("face");
+  var counter = document.getElementById("counter");
+  var soon = document.getElementById("soon");
+  var ticker;
+  var distance = moment(countDownDate).diff(moment());
+
+  if(theme) {
+    root.classList.add('countdown-'+theme);
+  }
+
+  if (useLabel === true) {
+    [].forEach.call(document.querySelectorAll('.label'), function (element) {
+      element.classList.remove('off');
+    });
+  }
+
+  ticker = setInterval(function () {
+    if (distance < 0) {
+      counter.classList.add('off');
+      clearInterval(ticker);
+      soon.classList.remove('off');
+      soon.classList.add('anim1x');
+
+    } else {
+      face.innerHTML = moment(distance).format('mm:ss');
+      distance = distance - 1000;
+    }
+  }, 1000);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+@import "../base";
+@import "neon";
+
+$white: #fff;
+
+html {
+  height: 100%;
+}
+
+body{
+  /*background-color: transparent;*/
+  background-color: #000;
+  white-space: nowrap;
+  height: 100%;
+  color: $white;
+  animation: fadein 3s ease-in;
+}
+
+
+.countdown {
+
+  .counter {
+    height: 214px;
+  }
+
+  .face {
+    font-size: 1.5em;
+    line-height: 1;
+  }
+
+  .flex {
+    align-items: flex-end;
+    display: flex;
+  }
+
+  .text {
+    font-size: 7em;
+  }
+
+  padding-left: 1em
+}
