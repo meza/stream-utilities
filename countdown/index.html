@@ -74,7 +74,10 @@
       soon.classList.add('anim1x');
 
     } else {
+      face.classList.remove('anim');
       face.innerHTML = moment(distance).format('mm:ss');
+      void face.offsetWidth;
+      face.classList.add('anim');
       distance = distance - 1000;
     }
   }, 1000);
