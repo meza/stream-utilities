@@ -1,7 +1,14 @@
+html {
+  height: 250px;
+  width: 1500px;
+  max-height: 250px;
+  max-width: 1500px;
+}
 body {
-  background-color: transparent;
+  background-color: black;
   font-family: Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
-  height: 3000px;
+  height: 250px;
+  width: 1500px;
 }
 
 .discord {
