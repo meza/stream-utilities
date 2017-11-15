@@ -1,0 +1,72 @@
+body {
+  background-color: transparent;
+  font-family: Whitney,Helvetica Neue,Helvetica,Arial,Lucida Grande,sans-serif;
+  height: 3000px;
+}
+
+.discord {
+  height: 250px;
+  max-height: 250px;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+}
+
+.text {
+  background-color: #2C2F33;
+  color: #99AAB5;
+  font-size: 120px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 28px;
+  padding-bottom: 69px;
+  margin-left: -10px;
+  margin-top: 76px;
+  z-index: -10;
+}
+
+.logo {
+  margin-top: 10px;
+}
+
+.invite {
+  color: white;
+  font-weight: bold;
+}
+
+.slider {
+  overflow-y: hidden;
+  margin-top: 0;
+
+  transition-property: all;
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(1, 0, 0.5, 1);
+}
+
+.slider.closed {
+  margin-top: 100%;
+}
+
+.shake {
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}

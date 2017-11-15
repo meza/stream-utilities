@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+    <link href="/stream-utilities/css/discord/discord.css" rel="stylesheet">
+</head>
+<body>
+<!-- Consider following/subscribing to vsbmeza3 on twitch if you use this :) -->
+<div id="discord" class="discord slider closed">
+    <div class="logo">
+        <img src="https://cdn-images-1.medium.com/max/230/1*OoXboCzk0gYvTNwNnV4S9A@2x.png">
+    </div>
+    <div class="text">
+        <span>discord.gg/</span><span class="invite" id="discordId"></span>
+    </div>
+</div>
+<script>
+
+    var openEvery = 15; //m
+    var keepOpenFor = 10; //s
+
+  var audio = new Audio('/stream-utilities/discord/woosh.mp3');
+
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  function close(element) {
+    d.classList.add('closed');
+    element.classList.remove('shake');
+    setTimeout(function() {
+      open(element);
+    }, openEvery * 60 * 1000);
+  }
+
+  function open(element) {
+    element.classList.remove('closed');
+    setTimeout(function() {audio.play()}, 800);
+
+    var interval = setInterval(function() {
+      element.classList.toggle('shake');
+    }, 3000);
+
+    setTimeout(function() {
+      clearInterval(interval);
+      close(element);
+    }, keepOpenFor * 1000);
+  }
+
+  var invite = getParameterByName('invite');
+
+  document.getElementById('discordId').innerHTML = invite;
+
+  var d = document.getElementById('discord');
+
+  setTimeout(function() {
+    open(d);
+  }, 2000);
+
+</script>
+</body>
+</html>
