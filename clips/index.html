@@ -9,7 +9,7 @@
     <div id="clipframe" class="clipframe"></div>
     <div class="clipper off fader" id="clipper">
         <div class="info">
-            Clipper: <span id="curator" class="curator"></span>
+            Clipper: <span id="curator" class="curator"></span> <span class="views" id="views"></span>
         </div>
     </div>
 </div>
@@ -41,6 +41,7 @@
     video.height = Math.ceil(document.getElementById('container').offsetWidth/1.7777777778);
     video.autoplay = true;
 
+    console.log(clip);
     clipItem.appendChild(video);
 
     var t = (video.height / 2) - (clipper.offsetHeight / 2);
@@ -52,6 +53,7 @@
     clipsDisplay.innerHTML = "";
     clipsDisplay.appendChild(clipItem);
     document.getElementById('curator').innerHTML = clip.curator.display_name;
+    document.getElementById('views').innerHTML = '(viewed '+clip.views + ' times)';
     clipper.classList.remove('off');
 
     setTimeout(function() {
