@@ -93,13 +93,14 @@
 
     var channel = getParameterByName('channel');
     var period = getParameterByName('period') || 'all';
+    var limit = getParameterByName('limit') || '10';
 
     var httpRequest = new XMLHttpRequest();
 
     httpRequest.addEventListener('load', function(r) {
       clipsLoaded(r.target.responseText);
     });
-    httpRequest.open('GET', 'https://api.twitch.tv/kraken/clips/top?limit=10&channel='+channel+'&period='+period);
+    httpRequest.open('GET', 'https://api.twitch.tv/kraken/clips/top?limit='+limit+'&channel='+channel+'&period='+period);
     httpRequest.setRequestHeader('Client-ID', getParameterByName('clientId'));
     httpRequest.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
     httpRequest.send();
