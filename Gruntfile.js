@@ -20,6 +20,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           src: [
+            'clips/**/*.scss',
             'countdown/**/*.scss',
             'discord/**/*.scss'
           ],

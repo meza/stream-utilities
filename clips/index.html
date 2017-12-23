@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+    <link href="/stream-utilities/css/clips/clips.css" rel="stylesheet">
+</head>
+<body>
+<!-- Consider following/subscribing to vsbmeza3 on twitch if you use this :) -->
+<div class="container" id="container">
+    <div id="clipframe" class="clipframe"></div>
+    <div class="clipper off fader" id="clipper">
+        <div class="info">
+            Clipper: <span id="curator" class="curator"></span>
+        </div>
+    </div>
+</div>
+<script>
+
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  function getRandom(max) {
+    return (Math.floor(Math.random() * (max - 1 + 1 )) + 1 );
+  }
+
+  function loadClip(clip, prev) {
+    var clipsDisplay = document.getElementById('clipframe');
+    var clipper = document.getElementById('clipper');
+
+    clipItem = document.createElement('div');
+    video = document.createElement('video');
+    video.classList.add('clip');
+    video.src = clip.thumbnails.medium.substring(0, clip.thumbnails.medium.indexOf('-preview')) + '.mp4';
+    video.width = document.getElementById('container').offsetWidth;
+    video.height = Math.ceil(document.getElementById('container').offsetWidth/1.7777777778);
+    video.autoplay = true;
+
+    clipItem.appendChild(video);
+
+    var t = (video.height / 2) - (clipper.offsetHeight / 2);
+    clipper.style.top = t + 'px';
+
+    console.log(t);
+
+
+    clipsDisplay.innerHTML = "";
+    clipsDisplay.appendChild(clipItem);
+    document.getElementById('curator').innerHTML = clip.curator.display_name;
+    clipper.classList.remove('off');
+
+    setTimeout(function() {
+      clipper.classList.add('off');
+      clipper.style.top = 0;
+    },5000);
+
+    video.addEventListener('ended', function () {
+      clipper.classList.add('off');
+      clipper.style.top = 0;
+      pullClips();
+    });
+
+  }
+
+  function loadRandomClip(clips, previous) {
+    var prev = previous || -1;
+
+    var randomIndex = getRandom(clips.length) - 1;
+
+    while (randomIndex === prev) {
+      randomIndex = getRandom(clips.length) - 1;
+    }
+
+    loadClip(clips[randomIndex], randomIndex);
+
+  }
+
+  function clipsLoaded(resp) {
+
+    clipList = JSON.parse(resp);
+
+    loadRandomClip(clipList.clips);
+  }
+
+  function pullClips() {
+
+    var channel = getParameterByName('channel');
+    var period = getParameterByName('period') || 'all';
+
+    var httpRequest = new XMLHttpRequest();
+
+    httpRequest.addEventListener('load', function(r) {
+      clipsLoaded(r.target.responseText);
+    });
+    httpRequest.open('GET', 'https://api.twitch.tv/kraken/clips/top?limit=10&channel='+channel+'&period='+period);
+    httpRequest.setRequestHeader('Client-ID', getParameterByName('clientId'));
+    httpRequest.setRequestHeader('Accept', 'application/vnd.twitchtv.v5+json');
+    httpRequest.send();
+  }
+
+  pullClips();
+
+
+</script>
+</body>
+</html>
